@@ -54,15 +54,22 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
+  bool Loading=true;
+
   getCategories() async {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection("categories")
         .orderBy("title")
         .get();
     categoriesList = querySnapshot.docs;
+    Loading = false;
 
     setState(() {});
   }
+
+
+
+
 
   @override
   void initState() {
@@ -142,6 +149,11 @@ class _HomePageState extends State<HomePage> {
               Container(
                 height: 20,
               ),
+              Loading
+                  ? Center(
+                child: CircularProgressIndicator(),
+              )
+                  :
               Container(
                 height: 100,
                 child: ListView.builder(

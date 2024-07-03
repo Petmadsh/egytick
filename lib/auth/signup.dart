@@ -96,7 +96,7 @@ class _RegisterState extends State<Register> {
                     if(val == ""){
                       return "Can't be empty";
                     }
-                  }),
+                  }, isPassword: true,),
                   Container(
                     height: 10,
                   ),

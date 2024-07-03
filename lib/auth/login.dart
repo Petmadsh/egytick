@@ -91,7 +91,7 @@ class _LoginState extends State<Login> {
                       if (val == "") {
                         return "Can't be empty";
                       }
-                    },
+                    }
                   ),
                   Container(
                     height: 10,
@@ -110,7 +110,8 @@ class _LoginState extends State<Login> {
                         if (val == "") {
                           return "Can't be empty";
                         }
-                      }),
+
+                      }, isPassword: true,),
 
 
                      Container(
