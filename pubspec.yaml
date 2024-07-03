@@ -85,10 +85,11 @@ flutter:
     - images/cities/cairo.jpeg
     - images/cities/giza.jpeg
     - images/cities/luxor.jpeg
-    - images/categories_icons/beach.png
-    - images/categories_icons/church.png
-    - images/categories_icons/museum.png
-    - images/categories_icons/temple.png
+    - images/categories/pharaonic.jpg
+    - images/categories/coptic.jpg
+    - images/categories/romans_greeks.jpg
+    - images/categories/islamic.png
+
 
   # - images/a_dot_ham.jpeg
 

@@ -12,48 +12,66 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<QueryDocumentSnapshot> cities = [];
-  //List<QueryDocumentSnapshot> categories = [];
+  List<QueryDocumentSnapshot> categoriesList = [];
+
+  CollectionReference categories =
+      FirebaseFirestore.instance.collection('categories');
+
+  Future<void> addCategories() async {
+    // Check if categories already exist to avoid duplicates
+    QuerySnapshot querySnapshot = await categories.get();
+    if (querySnapshot.docs.isEmpty) {
+      // Add categories if they do not exist
+      await Future.wait([
+        categories.add(
+            {'image': 'images/categories/pharaonic.jpg', 'title': "Pharaonic"}),
+        categories
+            .add({'image': 'images/categories/coptic.jpg', 'title': "Coptic"}),
+        categories.add(
+            {'image': 'images/categories/islamic.png', 'title': "Islamic"}),
+        categories.add({
+          'image': 'images/categories/romans_greeks.jpg',
+          'title': "Greek/Roman"
+        }),
+      ]);
+      print("Categories Added");
+    } else {
+      print("Categories already exist");
+    }
+  }
 
   bool isLoading = true;
 
   getCities() async {
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection("cities").orderBy("name").get();
-    cities.addAll(querySnapshot.docs);
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("cities")
+        .orderBy("name")
+        .get();
+    cities = querySnapshot.docs;
 
     isLoading = false;
 
     setState(() {});
   }
 
-  // getCategories() async {
-  //   QuerySnapshot querySnapshot =
-  //   await FirebaseFirestore.instance.collection("categories").get();
-  //   categories.addAll(querySnapshot.docs);
-  //
-  //
-  //   setState(() {});
-  // }
+  getCategories() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("categories")
+        .orderBy("title")
+        .get();
+    categoriesList = querySnapshot.docs;
+
+    setState(() {});
+  }
 
   @override
   void initState() {
-    getCities();
-   // getCategories();
     super.initState();
+    addCategories().then((_) {
+      getCities();
+      getCategories();
+    });
   }
-
-
-
-
-
-
-
-  List categories = [
-    {"icon": Icons.temple_hindu_outlined, "title": "Temples"},
-    {"icon": Icons.museum_outlined, "title": "Museums"},
-    {"icon": Icons.church_outlined, "title": "Religious"},
-    {"icon": Icons.beach_access_outlined, "title": "Beaches"},
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -62,16 +80,13 @@ class _HomePageState extends State<HomePage> {
           title: Row(
             children: [
               Text("Homepage"),
-              // Spacer(),
-              // Image.asset("images/Egyptian_Pyramids_with_Sphinx.png", width: 55,),
-              // Spacer(),
             ],
           ),
           actions: [
             IconButton(
                 onPressed: () async {
                   GoogleSignIn googleSignIn = GoogleSignIn();
-                  googleSignIn.disconnect();
+                  await googleSignIn.disconnect();
                   await FirebaseAuth.instance.signOut();
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil("login", (route) => false);
@@ -130,33 +145,41 @@ class _HomePageState extends State<HomePage> {
               Container(
                 height: 100,
                 child: ListView.builder(
-                  itemCount: categories.length,
+                  itemCount: categoriesList.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      margin: const EdgeInsets.only(right: 10),
-                      child: Column(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                color: Colors.grey[300],
-                                borderRadius: BorderRadius.circular(100)),
-                            child: Container(
-                              child: Icon(
-                                categories[index]['icon'],
-                                size: 30,
-
+                    var category =
+                        categoriesList[index].data() as Map<String, dynamic>;
+                    return InkWell(
+                      onTap: () {
+                        // Navigator.of(context).push(MaterialPageRoute(builder: (context) => ItemsDetails(data:bestselling[index],)));
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(right: 10),
+                        child: Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.grey[300],
+                                  borderRadius: BorderRadius.circular(100)),
+                              padding: const EdgeInsets.all(5),
+                              child: ClipOval(
+                                child: Image.asset(
+                                  category['image'],
+                                  width: 70,
+                                  height: 70,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
-                            padding: const EdgeInsets.all(10),
-                          ),
-                          Text(
-                            categories[index]['title'],
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey[800]),
-                          ),
-                        ],
+                            Text(
+                              category['title'],
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey[800]),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -181,6 +204,7 @@ class _HomePageState extends State<HomePage> {
                           const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 1, mainAxisExtent: 280),
                       itemBuilder: (BuildContext context, int index) {
+                        var city = cities[index].data() as Map<String, dynamic>;
                         return InkWell(
                             onTap: () {
                               // Navigator.of(context).push(MaterialPageRoute(builder: (context) => ItemsDetails(data:bestselling[index],)));
@@ -194,21 +218,20 @@ class _HomePageState extends State<HomePage> {
                                     children: [
                                       Container(
                                         width: 300,
-                                        // color: Colors.white,
                                         child: Image.asset(
-                                          cities[index]['image'],
+                                          city['image'],
                                           height: 170,
                                           fit: BoxFit.fill,
                                         ),
                                       ),
                                       Text(
-                                        cities[index]['name'],
+                                        city['name'],
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16),
                                       ),
                                       Text(
-                                        cities[index]['description'],
+                                        city['description'],
                                         style:
                                             const TextStyle(color: Colors.grey),
                                       ),
