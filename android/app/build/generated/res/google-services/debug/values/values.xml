@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gcm_defaultSenderId" translatable="false">468633162217</string>
+    <string name="google_api_key" translatable="false">AIzaSyB3FWFT_C2iGF-ri1rNnmTAYBiJlDqPo54</string>
+    <string name="google_app_id" translatable="false">1:468633162217:android:d1beb18e8b63cd304fbb78</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyB3FWFT_C2iGF-ri1rNnmTAYBiJlDqPo54</string>
+    <string name="google_storage_bucket" translatable="false">visit-egypt-a2516.appspot.com</string>
+    <string name="project_id" translatable="false">visit-egypt-a2516</string>
+</resources>
