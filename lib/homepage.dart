@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class HomePage extends StatefulWidget {
+
   const HomePage({super.key});
 
   @override
@@ -249,8 +250,7 @@ class _HomePageState extends State<HomePage> {
                           citiesList[index].data() as Map<String, dynamic>;
                       return InkWell(
                         onTap: () {
-                          // Navigate to city details if needed
-                        },
+                          Navigator.of(context).pushNamed("homepage");                        },
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 15),
                           child: Card(
