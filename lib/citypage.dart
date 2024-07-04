@@ -1,101 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:egytick/citypage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class CityPage extends StatefulWidget {
+  final String cityId;
+  const CityPage({super.key, required this.cityId});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<CityPage> createState() => _CityPageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  List<QueryDocumentSnapshot> citiesList = [];
+class _CityPageState extends State<CityPage> {
+  List<QueryDocumentSnapshot> cityData = [];
   List<QueryDocumentSnapshot> categoriesList = [];
 
-  CollectionReference categories =
-  FirebaseFirestore.instance.collection('categories');
+  CollectionReference categories = FirebaseFirestore.instance.collection('categories');
   CollectionReference cities = FirebaseFirestore.instance.collection('cities');
-
-  // Future<void> addCategories() async {
-  //   // Check if categories already exist to avoid duplicates
-  //   QuerySnapshot querySnapshot = await categories.get();
-  //   if (querySnapshot.docs.isEmpty) {
-  //     // Add categories if they do not exist
-  //     await Future.wait([
-  //       categories.add(
-  //           {'image': 'images/categories/pharaonic.jpg', 'title': "Pharaonic"}),
-  //       categories
-  //           .add({'image': 'images/categories/coptic.jpg', 'title': "Coptic"}),
-  //       categories.add(
-  //           {'image': 'images/categories/islamic.png', 'title': "Islamic"}),
-  //       categories.add({
-  //         'image': 'images/categories/romans_greeks.jpg',
-  //         'title': "Greek/Roman"
-  //       }),
-  //     ]);
-  //     print("Categories Added");
-  //   } else {
-  //     print("Categories already exist");
-  //   }
-  // }
-  //
-  // Future<void> addCities() async {
-  //   // Check if cities already exist to avoid duplicates
-  //   QuerySnapshot querySnapshot = await cities.get();
-  //   if (querySnapshot.docs.isEmpty) {
-  //     // Add cities if they do not exist
-  //     await Future.wait([
-  //       cities.add({
-  //         'image': 'images/cities/aswan.jpeg',
-  //         'name': "Aswan",
-  //         'description':
-  //             "Aswan, located in southern Egypt on the Nile River, is known for its tranquil beauty and historical significance."
-  //       }),
-  //       cities.add({
-  //         'image': 'images/cities/cairo.jpeg',
-  //         'name': "Cairo",
-  //         'description':
-  //             "Cairo, the sprawling capital of Egypt, is a city steeped in history and culture."
-  //       }),
-  //       cities.add({
-  //         'image': 'images/cities/giza.jpeg',
-  //         'name': "Giza",
-  //         'description':
-  //             "Giza, a city on the western outskirts of Cairo, is renowned worldwide for its ancient monuments."
-  //       }),
-  //       cities.add({
-  //         'image': 'images/cities/luxor.jpeg',
-  //         'name': "Luxor",
-  //         'description':
-  //             "Luxor, often referred to as the world's greatest open-air museum,located in southern Egypt renowned for its extraordinary ancient monuments."
-  //       }),
-  //       cities.add({
-  //         'image': 'images/cities/alexandria.jpeg',
-  //         'name': "Alexandria",
-  //         'description':
-  //             "Alexandria, Egypt's second-largest city, is a Mediterranean gem with a rich historical tapestry."
-  //       }),
-  //       // Add more cities here as needed
-  //     ]);
-  //     print("Cities Added");
-  //   } else {
-  //     print("Cities already exist");
-  //   }
-  // }
 
   bool isLoadingCities = true;
   bool isLoadingCategories = true;
 
   getCities() async {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection("cities")
-        .orderBy("name")
-        .get();
+        .collection("cities").doc(widget.cityId).collection("citydata").get();
     setState(() {
-      citiesList = querySnapshot.docs;
+      cityData = querySnapshot.docs;
       isLoadingCities = false;
     });
   }
@@ -114,7 +44,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-
     getCities();
     getCategories();
   }
@@ -123,7 +52,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Homepage"),
+        title: const Text("City"),
         actions: [
           IconButton(
             onPressed: () async {
@@ -142,14 +71,14 @@ class _HomePageState extends State<HomePage> {
         selectedItemColor: Colors.orange,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: ""),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_bag_outlined), label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.shopping_bag_outlined), label: ""),
           BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: ""),
         ],
       ),
-      body: Container(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
-        child: ListView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
@@ -187,8 +116,7 @@ class _HomePageState extends State<HomePage> {
                 itemCount: categoriesList.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
-                  var category = categoriesList[index].data()
-                  as Map<String, dynamic>;
+                  var category = categoriesList[index].data() as Map<String, dynamic>;
                   return InkWell(
                     onTap: () {
                       // Navigate to category details if needed
@@ -205,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                             padding: const EdgeInsets.all(5),
                             child: ClipOval(
                               child: Image.asset(
-                                category['image'],
+                                category['image'] ?? 'assets/default_image.jpg', // Default image
                                 width: 70,
                                 height: 70,
                                 fit: BoxFit.cover,
@@ -213,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Text(
-                            category['title'],
+                            category['title'] ?? 'Unknown', // Default title
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.grey[800],
@@ -228,31 +156,24 @@ class _HomePageState extends State<HomePage> {
             ),
             const SizedBox(height: 30),
             const Text(
-              "Cities",
+              "City Details",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
             isLoadingCities
                 ? Center(child: CircularProgressIndicator())
                 : GridView.builder(
-              itemCount: citiesList.length,
+              itemCount: cityData.length,
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              gridDelegate:
-              const SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 1,
-                mainAxisExtent: 280,
+                mainAxisExtent: 10000,
               ),
               itemBuilder: (BuildContext context, int index) {
-                var city =
-                citiesList[index].data() as Map<String, dynamic>;
+                var city = cityData[index].data() as Map<String, dynamic>;
+                List<dynamic> images = city['image'] ?? []; // Fetch images array
                 return InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context)
-                    =>
-                        CityPage(cityId: citiesList[index].id)));
-                  },
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 15),
                     child: Card(
@@ -260,23 +181,30 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
-                            width: 340,
-                            child: Image.asset(
-                              city['image'],
-                              height: 170,
-                              fit: BoxFit.fill,
-                            ),
+                            width: 400,
+                            height: 300,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: images.length,
+                              itemBuilder: (context, imageIndex) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Image.asset(
+                                    images[imageIndex],
+                                    width: 400,
+                                    height: 300,
+                                    fit: BoxFit.cover,
+                                  ),
+                                );
+                              },
+                            )
                           ),
+                          const SizedBox(height: 10),
+
+                          const SizedBox(height: 10),
                           Text(
-                            city['name'],
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                          Text(
-                            city['description'],
-                            style: const TextStyle(color: Colors.grey),
+                            city['description'] , // Default description
+                            style: const TextStyle(color: Colors.black, fontSize: 16),
                           ),
                         ],
                       ),

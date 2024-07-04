@@ -89,6 +89,31 @@ flutter:
     - images/categories/coptic.jpg
     - images/categories/romans_greeks.jpg
     - images/categories/islamic.png
+    - images/giza/giza0.jpg
+    - images/giza/giza1.jpg
+    - images/giza/giza2.jpg
+    - images/giza/giza3.jpg
+    - images/giza/giza4.jpg
+    - images/cairo/cairo0.jpg
+    - images/cairo/cairo1.jpg
+    - images/cairo/cairo2.jpg
+    - images/cairo/cairo3.jpeg
+    - images/cairo/cairo4.jpg
+    - images/alexandria/alexandria0.jpg
+    - images/alexandria/alexandria1.jpg
+    - images/alexandria/alexandria2.jpg
+    - images/alexandria/alexandria3.jpg
+    - images/alexandria/alexandria4.jpg
+    - images/aswan/aswan0.jpg
+    - images/aswan/aswan1.jpg
+    - images/aswan/aswan2.jpg
+    - images/aswan/aswan3.jpg
+    - images/aswan/aswan4.jpg
+    - images/luxor/luxor0.jpg
+    - images/luxor/luxor1.jpg
+    - images/luxor/luxor2.jpg
+    - images/luxor/luxor3.jpg
+    - images/luxor/luxor4.jpg
 
 
   # - images/a_dot_ham.jpeg
