@@ -110,7 +110,7 @@ class _CityPageState extends State<CityPage> {
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -168,8 +168,7 @@ class _CityPageState extends State<CityPage> {
                                   padding: const EdgeInsets.all(5),
                                   child: ClipOval(
                                     child: Image.asset(
-                                      category['image'] ??
-                                          'assets/default_image.jpg',
+                                      category['image'] ,
                                       // Default image
                                       width: 70,
                                       height: 70,
@@ -178,8 +177,7 @@ class _CityPageState extends State<CityPage> {
                                   ),
                                 ),
                                 Text(
-                                  category['title'] ??
-                                      'Unknown', // Default title
+                                  category['title'],
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.grey[800],
@@ -207,7 +205,7 @@ class _CityPageState extends State<CityPage> {
                     itemBuilder: (BuildContext context, int index) {
                       var city = cityData[index].data() as Map<String, dynamic>;
                       List<dynamic> images =
-                          city['image'] ?? []; // Fetch images array
+                          city['image'] ; // Fetch images array
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 15),
                         child: Card(
@@ -236,8 +234,7 @@ class _CityPageState extends State<CityPage> {
                               ),
                               const SizedBox(height: 10),
                               Text(
-                                city['description'] ??
-                                    'No description available',
+                                city['description'] ,
                                 // Default description
                                 style: const TextStyle(
                                     color: Colors.black, fontSize: 15),
@@ -285,7 +282,7 @@ class _CityPageState extends State<CityPage> {
                                                   ),
                                                   const SizedBox(height: 10),
                                                   Text(
-                                                    place['name'] ?? 'Unknown',
+                                                    place['name'] ,
                                                     // Default name
                                                     style: const TextStyle(
                                                       fontWeight:
@@ -295,8 +292,7 @@ class _CityPageState extends State<CityPage> {
                                                   ),
                                                   const SizedBox(height: 10),
                                                   Text(
-                                                    place['description'] ??
-                                                        'No description available',
+                                                    place['description'] ,
                                                     // Default description
                                                     style: const TextStyle(
                                                         color: Colors.grey),

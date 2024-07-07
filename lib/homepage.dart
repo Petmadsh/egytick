@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: Container(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(10),
         child: ListView(
           children: [
             Row(
