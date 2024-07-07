@@ -110,8 +110,10 @@ class _CityPageState extends State<CityPage> {
         ],
       ),
       body: SingleChildScrollView(
+
         padding: const EdgeInsets.all(10),
         child: Column(
+
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
@@ -204,8 +206,9 @@ class _CityPageState extends State<CityPage> {
                 var city = cityData[index].data() as Map<String, dynamic>;
                 List<dynamic> images = city['image']; // Fetch images array
                 return Padding(
-                  padding: const EdgeInsets.only(bottom: 15),
+                  padding: const EdgeInsets.only(bottom: 10),
                   child: Card(
+                    color: Colors.white,elevation: 0,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -245,9 +248,12 @@ class _CityPageState extends State<CityPage> {
                           height: 30,
                           color: Colors.white,
                         ),
-                        const Text(
-                          "Places",
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        Container(
+                          alignment:Alignment.centerLeft,
+                          child: Text(
+                            "Places",
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
                         ),
                         const SizedBox(height: 10),
                         isLoadingPlaces
@@ -263,10 +269,14 @@ class _CityPageState extends State<CityPage> {
                               child: InkWell(
                                 onTap: () {},
                                 child: Card(
+
+
                                   child: Column(
+
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Container(
+
                                         width: 400,
                                         height: 300,
                                         child: Image.asset(
