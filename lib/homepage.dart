@@ -19,72 +19,7 @@ class _HomePageState extends State<HomePage> {
   FirebaseFirestore.instance.collection('categories');
   CollectionReference cities = FirebaseFirestore.instance.collection('cities');
 
-  // Future<void> addCategories() async {
-  //   // Check if categories already exist to avoid duplicates
-  //   QuerySnapshot querySnapshot = await categories.get();
-  //   if (querySnapshot.docs.isEmpty) {
-  //     // Add categories if they do not exist
-  //     await Future.wait([
-  //       categories.add(
-  //           {'image': 'images/categories/pharaonic.jpg', 'title': "Pharaonic"}),
-  //       categories
-  //           .add({'image': 'images/categories/coptic.jpg', 'title': "Coptic"}),
-  //       categories.add(
-  //           {'image': 'images/categories/islamic.png', 'title': "Islamic"}),
-  //       categories.add({
-  //         'image': 'images/categories/romans_greeks.jpg',
-  //         'title': "Greek/Roman"
-  //       }),
-  //     ]);
-  //     print("Categories Added");
-  //   } else {
-  //     print("Categories already exist");
-  //   }
-  // }
-  //
-  // Future<void> addCities() async {
-  //   // Check if cities already exist to avoid duplicates
-  //   QuerySnapshot querySnapshot = await cities.get();
-  //   if (querySnapshot.docs.isEmpty) {
-  //     // Add cities if they do not exist
-  //     await Future.wait([
-  //       cities.add({
-  //         'image': 'images/cities/aswan.jpeg',
-  //         'name': "Aswan",
-  //         'description':
-  //             "Aswan, located in southern Egypt on the Nile River, is known for its tranquil beauty and historical significance."
-  //       }),
-  //       cities.add({
-  //         'image': 'images/cities/cairo.jpeg',
-  //         'name': "Cairo",
-  //         'description':
-  //             "Cairo, the sprawling capital of Egypt, is a city steeped in history and culture."
-  //       }),
-  //       cities.add({
-  //         'image': 'images/cities/giza.jpeg',
-  //         'name': "Giza",
-  //         'description':
-  //             "Giza, a city on the western outskirts of Cairo, is renowned worldwide for its ancient monuments."
-  //       }),
-  //       cities.add({
-  //         'image': 'images/cities/luxor.jpeg',
-  //         'name': "Luxor",
-  //         'description':
-  //             "Luxor, often referred to as the world's greatest open-air museum,located in southern Egypt renowned for its extraordinary ancient monuments."
-  //       }),
-  //       cities.add({
-  //         'image': 'images/cities/alexandria.jpeg',
-  //         'name': "Alexandria",
-  //         'description':
-  //             "Alexandria, Egypt's second-largest city, is a Mediterranean gem with a rich historical tapestry."
-  //       }),
-  //       // Add more cities here as needed
-  //     ]);
-  //     print("Cities Added");
-  //   } else {
-  //     print("Cities already exist");
-  //   }
-  // }
+
 
   bool isLoadingCities = true;
   bool isLoadingCategories = true;
