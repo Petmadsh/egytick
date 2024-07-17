@@ -117,8 +117,8 @@ flutter:
     - images/cities/giza/places/pyramids/Pyramids_of_the_Giza.jpg
     - images/cities/giza/places/saqqara/saqqara.jpg
     - images/cities/giza/places/Imhotep_Museum/Imhotep_Museum.jpg
-    - images/cities/cairo/places/Mausoleum_of_Imam_al-Shafi'i/Mausoleum_of_Imam_al-Shafi'i.jpg
-    - images/cities/cairo/places/Amr_ibn_al-As_Mosque/Amr_ibn_al-As_Mosque.jpg
+    - images/cities/cairo/places/Mausoleum_of_Imam_al-Shafi'i/Mausoleum_of_Imam_alShafii.jpg
+    - images/cities/cairo/places/Amr_ibn_al-As_Mosque/Amr_ibn_alAs_Mosque.jpg
     - images/cities/cairo/places/The_Hanging_Church/The_Hanging_Church.jpg
     - images/cities/cairo/places/Saints_Sergius_and_Bacchus_Church/Saints_Sergius_and_Bacchus_Church.jpg
     - images/cities/cairo/places/The_Egyptian_Museum/The_Egyptian_Museum.jpg
