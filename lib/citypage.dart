@@ -105,7 +105,7 @@ class _CityPageState extends State<CityPage> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: ""),
           BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_bag_outlined), label: ""),
+              icon: Icon(Icons.qr_code), label: ""),
           BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: ""),
         ],
       ),
