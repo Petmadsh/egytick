@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'ProfilePage.dart';
 import 'CategoryPlacesPage.dart';
 import 'citypage.dart';
+import 'PlaceDetailsPage.dart';  // Ensure this import is correct
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -76,7 +77,7 @@ class _HomePageState extends State<HomePage> {
       });
     } else {
       setState(() {
-        filteredPlacesList = [];
+        filteredPlacesList = placesList;
         isSearching = false;
       });
     }
@@ -183,7 +184,7 @@ class _HomePageState extends State<HomePage> {
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   var place = filteredPlacesList[index].data() as Map<String, dynamic>;
-                  return placeCard(place);
+                  return placeCard(place, filteredPlacesList[index].reference.parent.parent!.id, filteredPlacesList[index].id);
                 },
               ),
           ],
@@ -273,39 +274,52 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget placeCard(Map<String, dynamic> place) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.asset(
-            place['image'], // Assuming image path stored in Firestore is an asset path
-            height: 200,
-            width: double.infinity,
-            fit: BoxFit.cover,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  place['name'],
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  place['description'],
-                  style: const TextStyle(color: Colors.grey),
-                ),
-              ],
+  Widget placeCard(Map<String, dynamic> place, String cityId, String placeId) {
+    return InkWell(
+      onTap: () {
+        if (cityId != null && placeId != null) {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => PlaceDetailsPage(cityId: cityId, placeId: placeId),
+          ));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Unable to load place details. Please try again later.'))
+          );
+        }
+      },
+      child: Card(
+        margin: const EdgeInsets.only(bottom: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.asset(
+              place['image'], // Assuming image path stored in Firestore is an asset path
+              height: 200,
+              width: double.infinity,
+              fit: BoxFit.cover,
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    place['name'],
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    place['description'],
+                    style: const TextStyle(color: Colors.grey),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
