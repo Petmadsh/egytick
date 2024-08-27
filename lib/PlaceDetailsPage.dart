@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'ProfilePage.dart';
+import 'HomePage.dart'; // Import the HomePage
 
 class PlaceDetailsPage extends StatefulWidget {
   final String cityId;
@@ -57,7 +59,30 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(placeDetails?['placeDescription'] ?? 'Place Details'),
+        title: Text(placeDetails?['placeName'] ?? 'Place Details'),  // Use placeName instead of placeDescription
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        iconSize: 40,
+        selectedItemColor: Colors.orange,
+        currentIndex: 0, // Update this as needed
+        onTap: (index) {
+          if (index == 0) {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => HomePage()),
+                  (route) => false,
+            );
+          } else if (index == 2) {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const ProfilePage(),
+            ));
+          }
+          // Add logic to handle other indexes if necessary
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.qr_code), label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: ""),
+        ],
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())

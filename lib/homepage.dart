@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'ProfilePage.dart';
 import 'CategoryPlacesPage.dart';
 import 'citypage.dart';
 
@@ -102,6 +103,14 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         iconSize: 40,
         selectedItemColor: Colors.orange,
+        currentIndex: 0,
+        onTap: (index) {
+          if (index == 2) {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const ProfilePage(),
+            ));
+          }
+        },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: ""),
           BottomNavigationBarItem(icon: Icon(Icons.qr_code), label: ""),
@@ -219,8 +228,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-
 
   Widget cityCard(Map<String, dynamic> city, String cityId) {
     return InkWell(

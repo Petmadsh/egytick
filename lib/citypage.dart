@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
+import 'ProfilePage.dart';
+import 'HomePage.dart';  // Import the HomePage
 import 'PlaceDetailsPage.dart';
 
 class CityPage extends StatefulWidget {
@@ -21,10 +22,8 @@ class _CityPageState extends State<CityPage> {
   String cityName = ""; // Default city name
   int currentImageIndex = 0; // Track current image index
 
-  CollectionReference categories =
-  FirebaseFirestore.instance.collection('categories');
-  CollectionReference cities =
-  FirebaseFirestore.instance.collection('cities');
+  CollectionReference categories = FirebaseFirestore.instance.collection('categories');
+  CollectionReference cities = FirebaseFirestore.instance.collection('cities');
 
   bool isLoadingCities = true;
   bool isLoadingCategories = true;
@@ -105,6 +104,19 @@ class _CityPageState extends State<CityPage> {
       bottomNavigationBar: BottomNavigationBar(
         iconSize: 40,
         selectedItemColor: Colors.orange,
+        currentIndex: 0,
+        onTap: (index) {
+          if (index == 0) {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => HomePage()),
+                  (route) => false,
+            );
+          } else if (index == 2) {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const ProfilePage(),
+            ));
+          }
+        },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: ""),
           BottomNavigationBarItem(icon: Icon(Icons.qr_code), label: ""),
