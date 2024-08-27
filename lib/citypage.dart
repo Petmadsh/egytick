@@ -19,8 +19,8 @@ class _CityPageState extends State<CityPage> {
   List<QueryDocumentSnapshot> cityData = [];
   List<QueryDocumentSnapshot> categoriesList = [];
   List<QueryDocumentSnapshot> placesList = [];
-  String cityName = ""; // Default city name
-  int currentImageIndex = 0; // Track current image index
+  String cityName = "";
+  int currentImageIndex = 0;
 
   CollectionReference categories = FirebaseFirestore.instance.collection('categories');
   CollectionReference cities = FirebaseFirestore.instance.collection('cities');
@@ -35,7 +35,7 @@ class _CityPageState extends State<CityPage> {
         .doc(widget.cityId)
         .get();
     setState(() {
-      cityName = documentSnapshot['name']; // Assuming the city document has a 'name' field
+      cityName = documentSnapshot['name'];
     });
   }
 
@@ -77,7 +77,7 @@ class _CityPageState extends State<CityPage> {
   @override
   void initState() {
     super.initState();
-    getCityName(); // Fetch city name
+    getCityName();
     getCities();
     getCategories();
     getPlaces();
@@ -87,7 +87,7 @@ class _CityPageState extends State<CityPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(cityName), // Use dynamic city name
+        title: Text(cityName),
         actions: [
           IconButton(
             onPressed: () async {

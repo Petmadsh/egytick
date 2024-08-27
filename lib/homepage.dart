@@ -5,7 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'ProfilePage.dart';
 import 'CategoryPlacesPage.dart';
 import 'citypage.dart';
-import 'PlaceDetailsPage.dart';  // Ensure this import is correct
+import 'PlaceDetailsPage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -243,7 +243,7 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.asset(
-              city['image'], // Assuming image path stored in Firestore is an asset path
+              city['image'],
               height: 200,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -293,7 +293,7 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.asset(
-              place['image'], // Assuming image path stored in Firestore is an asset path
+              place['image'],
               height: 200,
               width: double.infinity,
               fit: BoxFit.cover,

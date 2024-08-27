@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'ProfilePage.dart';
-import 'HomePage.dart'; // Import the HomePage
+import 'HomePage.dart';
 
 class PlaceDetailsPage extends StatefulWidget {
   final String cityId;
@@ -25,7 +25,7 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
 
   Future<void> fetchPlaceDetails() async {
     try {
-      // Fetch the first document from the 'details' subcollection
+
       QuerySnapshot detailsSnapshot = await FirebaseFirestore.instance
           .collection('cities')
           .doc(widget.cityId)
@@ -59,12 +59,12 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(placeDetails?['placeName'] ?? 'Place Details'),  // Use placeName instead of placeDescription
+        title: Text(placeDetails?['placeName'] ?? 'Place Details'),
       ),
       bottomNavigationBar: BottomNavigationBar(
         iconSize: 40,
         selectedItemColor: Colors.orange,
-        currentIndex: 0, // Update this as needed
+        currentIndex: 0,
         onTap: (index) {
           if (index == 0) {
             Navigator.of(context).pushAndRemoveUntil(
@@ -76,7 +76,7 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
               builder: (context) => const ProfilePage(),
             ));
           }
-          // Add logic to handle other indexes if necessary
+
         },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: ""),

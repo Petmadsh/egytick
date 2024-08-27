@@ -65,7 +65,7 @@ class _ProfilePageState extends State<ProfilePage> {
       bottomNavigationBar: BottomNavigationBar(
         iconSize: 40,
         selectedItemColor: Colors.orange,
-        currentIndex: 2, // Indicating the profile page is selected
+        currentIndex: 2,
         onTap: (index) {
           if (index == 0) {
             Navigator.of(context).pushAndRemoveUntil(
@@ -73,7 +73,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   (route) => false,
             );
           }
-          // Add other navigation options if necessary
+
         },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: ""),

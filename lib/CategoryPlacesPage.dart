@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'ProfilePage.dart';
 import 'HomePage.dart';
-import 'PlaceDetailsPage.dart';  // Import PlaceDetailsPage
+import 'PlaceDetailsPage.dart';
 
 class CategoryPlacesPage extends StatefulWidget {
   final String categoryName;
@@ -50,7 +50,7 @@ class _CategoryPlacesPageState extends State<CategoryPlacesPage> {
       bottomNavigationBar: BottomNavigationBar(
         iconSize: 40,
         selectedItemColor: Colors.orange,
-        currentIndex: 0, // Update this as needed to reflect the current page index
+        currentIndex: 0,
         onTap: (index) {
           if (index == 0) {
             Navigator.of(context).pushAndRemoveUntil(
@@ -62,7 +62,7 @@ class _CategoryPlacesPageState extends State<CategoryPlacesPage> {
               builder: (context) => const ProfilePage(),
             ));
           }
-          // Add logic to handle other indexes if necessary
+
         },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: ""),
@@ -76,8 +76,8 @@ class _CategoryPlacesPageState extends State<CategoryPlacesPage> {
         itemCount: placesList.length,
         itemBuilder: (context, index) {
           var place = placesList[index].data() as Map<String, dynamic>;
-          var cityId = placesList[index].reference.parent.parent?.id; // Fetch the cityId
-          var placeId = placesList[index].id; // Fetch the placeId
+          var cityId = placesList[index].reference.parent.parent?.id;
+          var placeId = placesList[index].id;
 
           return InkWell(
             onTap: () {
