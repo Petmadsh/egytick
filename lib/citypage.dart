@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import 'PlaceDetailsPage.dart';
+
 class CityPage extends StatefulWidget {
   final String cityId;
 
@@ -21,7 +23,8 @@ class _CityPageState extends State<CityPage> {
 
   CollectionReference categories =
   FirebaseFirestore.instance.collection('categories');
-  CollectionReference cities = FirebaseFirestore.instance.collection('cities');
+  CollectionReference cities =
+  FirebaseFirestore.instance.collection('cities');
 
   bool isLoadingCities = true;
   bool isLoadingCategories = true;
@@ -104,92 +107,15 @@ class _CityPageState extends State<CityPage> {
         selectedItemColor: Colors.orange,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: ""),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.qr_code), label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.qr_code), label: ""),
           BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: ""),
         ],
       ),
       body: SingleChildScrollView(
-
         padding: const EdgeInsets.all(10),
         child: Column(
-
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.search, size: 30),
-                      hintText: "Search",
-                      border: InputBorder.none,
-                      fillColor: Colors.grey[150],
-                      filled: true,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: const Icon(
-                    Icons.menu,
-                    size: 40,
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(height: 30),
-            const Text(
-              "Categories",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            isLoadingCategories
-                ? Center(child: CircularProgressIndicator())
-                : Container(
-              height: 100,
-              child: ListView.builder(
-                itemCount: categoriesList.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, int index) {
-                  var category = categoriesList[index].data() as Map<String, dynamic>;
-                  return InkWell(
-                    onTap: () {
-                      // Navigate to category details if needed
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.only(right: 10),
-                      child: Column(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                            padding: const EdgeInsets.all(5),
-                            child: ClipOval(
-                              child: Image.asset(
-                                category['image'],
-                                width: 70,
-                                height: 70,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          Text(
-                            category['title'],
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey[800],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
             const SizedBox(height: 30),
             const Text(
               "City Details",
@@ -208,7 +134,8 @@ class _CityPageState extends State<CityPage> {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Card(
-                    color: Colors.white,elevation: 0,
+                    color: Colors.white,
+                    elevation: 0,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -218,8 +145,6 @@ class _CityPageState extends State<CityPage> {
                           thickness: 5.0,
                           radius: Radius.circular(10),
                           scrollbarOrientation: ScrollbarOrientation.bottom,
-
-
                           child: Container(
                             height: 300,
                             child: ListView.builder(
@@ -249,7 +174,7 @@ class _CityPageState extends State<CityPage> {
                           color: Colors.white,
                         ),
                         Container(
-                          alignment:Alignment.centerLeft,
+                          alignment: Alignment.centerLeft,
                           child: Text(
                             "Places",
                             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -267,16 +192,19 @@ class _CityPageState extends State<CityPage> {
                             return Padding(
                               padding: EdgeInsets.only(bottom: 15),
                               child: InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => PlaceDetailsPage(
+                                      cityId: widget.cityId,
+                                      placeId: placesList[placeIndex].id,
+                                    ),
+                                  ));
+                                },
                                 child: Card(
-
-
                                   child: Column(
-
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Container(
-
                                         width: 400,
                                         height: 300,
                                         child: Image.asset(

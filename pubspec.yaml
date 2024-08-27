@@ -132,6 +132,10 @@ flutter:
     - images/cities/aswan/places/Philae/Philae.jpg
     - images/cities/aswan/places/Crocodile_Museum/Crocodile_Museum.png
     - images/cities/aswan/places/Abu_Simbel/Abu_Simbel.jpg
+    - images/pyramids_of_giza0.jpg
+    - images/pyramids_of_giza1.jpg
+    - images/pyramids_of_giza2.jpg
+    - images/pyramids_of_giza3.jpg
 
 
   # - images/a_dot_ham.jpeg
